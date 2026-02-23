@@ -70,6 +70,13 @@ body {
   text-align: center;
 }
 
+.input-description {
+  text-align: center;
+  color: #ffd700;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
 .input-textarea {
   width: 100%;
   padding: 16px;
@@ -78,7 +85,7 @@ body {
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
   font-size: 1rem;
-  font-family: inherit;
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
   resize: vertical;
   transition: border-color 0.2s;
 }
