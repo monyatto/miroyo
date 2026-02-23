@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const MAX_HASH_LENGTH = 4096;
+  const MAX_SHARE_BYTES = 2800;
+  const PAKO_PREFIX = "z_";
+
   initConfetti();
   setupDjImageFallback();
 
@@ -97,10 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("dj-trivia-section").classList.remove("hidden");
     }
   }
-
-  const MAX_HASH_LENGTH = 4096;
-  const MAX_SHARE_BYTES = 2800;
-  const PAKO_PREFIX = "z_";
 
   function encodeShareData(obj) {
     const json = JSON.stringify(obj);
