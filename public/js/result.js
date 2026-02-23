@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const MAX_HASH_LENGTH = 4096;
   const MAX_SHARE_BYTES = 2800;
+  const PAKO_PREFIX = "z_";
 
   function encodeShareData(obj) {
     const json = JSON.stringify(obj);
@@ -109,8 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
       throw new Error("share_data_too_large");
     }
 
-    const base64 = bytesToBase64(bytes);
-    return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    const compressed = window.pako.deflate(bytes);
+    const base64 = bytesToBase64(compressed);
+    return PAKO_PREFIX + base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
   }
 
   function decodeShareData(encoded) {
@@ -118,6 +120,15 @@ document.addEventListener("DOMContentLoaded", () => {
       throw new Error("invalid_share_data");
     }
 
+    if (encoded.startsWith(PAKO_PREFIX)) {
+      // pako圧縮形式
+      const bytes = base64UrlToBytes(encoded.slice(PAKO_PREFIX.length));
+      const decompressed = window.pako.inflate(bytes);
+      const json = new TextDecoder().decode(decompressed);
+      return JSON.parse(json);
+    }
+
+    // 旧形式（非圧縮Base64）との後方互換
     const bytes = base64UrlToBytes(encoded);
     if (bytes.length > MAX_SHARE_BYTES) {
       throw new Error("share_data_too_large");
