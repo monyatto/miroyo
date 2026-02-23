@@ -1,0 +1,9 @@
+{
+  "name": "miroyo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "がんばった成果を見せびらかすWebアプリ",
+  "dependencies": {
+    "@google/genai": "^1.0.0"
+  }
+}
